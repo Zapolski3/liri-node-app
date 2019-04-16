@@ -67,7 +67,7 @@ if (command === "spotify-this-song") {
 
         console.log(data.tracks.items[0].artists[0].name);
         console.log(data.tracks.items[0].preview_url);
-        console.log(search);
+     
         console.log(data.tracks.items[0].album.name);
 
     })
