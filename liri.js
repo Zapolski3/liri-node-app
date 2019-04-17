@@ -11,7 +11,7 @@ var spotify = new Spotify(keys.spotify);
 
 
 var command = process.argv[2];
-var artist = process.argv[3];
+var artist = process.argv.slice(3).join(" ");
 
 if (command === "concert-this") {
     
@@ -23,9 +23,13 @@ axios.get("https://rest.bandsintown.com/artists/" + artist + "/events?app_id=cod
     var json = response.data;
 
     for ( var i = 0; i < json.length; i++){
+      
         console.log(json[i].venue.name);
+        
         console.log(json[i].venue.city);
+        
         console.log(json[i].datetime);
+        console.log("==============================");
     }
     // If the axios was successful...
     // Then log the body from the site!
@@ -37,9 +41,9 @@ axios.get("https://rest.bandsintown.com/artists/" + artist + "/events?app_id=cod
       // The request was made and the server responded with a status code
       // that falls out of the range of 2xx
       console.log(error.response.data);
-      console.log("==============================");
+      
       console.log(error.response.status);
-      console.log("==============================");
+      
       console.log(error.response.headers);
     } else if (error.request) {
       // The request was made but no response was received
@@ -56,9 +60,9 @@ axios.get("https://rest.bandsintown.com/artists/" + artist + "/events?app_id=cod
 //=========================================------======------=========-------========-----------============
 
 if (command === "spotify-this-song") {
-    console.log(artist);
+    
     spotify.search({ type: 'track', query: artist, limit: 1, }, function (err, data) {
-        console.log(data);
+        // console.log(data);
         // var song = data.tracks.items;
 
         
@@ -68,11 +72,12 @@ if (command === "spotify-this-song") {
         // }
         //     console.log(data[i]);
         // }
-
-        console.log(data.tracks.items[0].artists[0].name);
-        console.log(data.tracks.items[0].preview_url);
-     
-        console.log(data.tracks.items[0].album.name);
+        
+        console.log("Artist:" +"  "+ data.tracks.items[0].artists[0].name);
+        console.log("Song:" +"  "+ artist);
+        console.log("Preview link:" +"  "+ data.tracks.items[0].preview_url);
+        
+        console.log("The song is from:" +"  "+ data.tracks.items[0].album.name+ "album");
 
     })
 }
